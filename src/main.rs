@@ -25,7 +25,7 @@ fn main() {
     println!("Guess the number");
 
     let secret_number = rand::thread_rng().gen_range(1..=100);
-    println!("-> secret is {secret_number}");
+    // println!("-> secret is {secret_number}");
 
     let mut count = 1;
     loop {
