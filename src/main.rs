@@ -1,7 +1,8 @@
 use rand::Rng;
+use std::cmp::Ordering;
 use std::io;
 
-fn get_guess() -> String {
+fn get_guess() -> i32 {
     println!("Guess the number");
 
     println!("Please input your guess.");
@@ -10,7 +11,7 @@ fn get_guess() -> String {
         .read_line(&mut guess)
         .expect("Failed to read line");
 
-    guess
+    guess.trim().parse().expect("Please type a number!")
 }
 
 fn main() {
@@ -20,5 +21,12 @@ fn main() {
     println!("-> secret is {secret_number}");
 
     let current_guess = get_guess();
-    println!("your guess is {current_guess}");
+    println!(
+        "your guess is {current_guess}, {}",
+        match current_guess.cmp(&secret_number) {
+            Ordering::Less => "too low",
+            Ordering::Equal => "you win",
+            Ordering::Greater => "too high",
+        }
+    );
 }
