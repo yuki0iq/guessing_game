@@ -22,13 +22,19 @@ fn main() {
     loop {
         count += 1;
         let current_guess = get_guess(count);
+        let res = current_guess.cmp(&secret_number);
+
         println!(
             "your {count}-th guess is {current_guess}, {}",
-            match current_guess.cmp(&secret_number) {
+            match res {
                 Ordering::Less => "too low",
                 Ordering::Equal => "you win",
                 Ordering::Greater => "too high",
             }
         );
+
+        if res == Ordering::Equal {
+            break
+        }
     }
 }
