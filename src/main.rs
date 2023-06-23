@@ -2,15 +2,22 @@ use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
 
-fn get_guess(count: i32) -> Result<i32, ()> {
+fn get_guess(count: i32) -> Result<i32, bool> {
     println!("Please input your {count}-th guess.");
     let mut guess = String::new();
     match io::stdin().read_line(&mut guess) {
-        Ok(_) => match guess.trim().parse() {
-            Ok(result) => Ok(result),
-            Err(_) => Err(()),
-        },
-        Err(_) => Err(()),
+        Ok(_) => {
+            let guess = guess.trim();
+            if guess.to_lowercase() == "quit" {
+                Err(false)
+            } else {
+                match guess.parse() {
+                    Ok(result) => Ok(result),
+                    Err(_) => Err(true),
+                }
+            }
+        }
+        Err(_) => Err(true),
     }
 }
 
@@ -40,7 +47,8 @@ fn main() {
                     break;
                 }
             }
-            Err(_) => continue,
+            Err(true) => continue,
+            Err(false) => break,
         }
         count += 1;
     }
