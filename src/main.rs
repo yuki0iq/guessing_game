@@ -1,9 +1,6 @@
 use std::io;
 
-fn main() {
-    println!("Hello, world!");
-    println!("Проверка юникода.");
-
+fn get_guess() -> String {
     println!("Guess the number");
     
     println!("Please input your guess.");
@@ -12,6 +9,13 @@ fn main() {
         .read_line(&mut guess)
         .expect("Failed to read line");
 
-    println!("Your guess is {guess}");
+    guess
+}
+
+fn main() {
+    println!("Hello, world!");
+
+    let current_guess = get_guess();
+    println!("your guess is {current_guess}");
 }
 
